@@ -1,0 +1,177 @@
+/* --- SISTEM NAVIGASI HAMBURGER MOBILE (DENGAN ANIMASI TRANSISI) --- */
+function toggleMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    // Switch class untuk memicu animasi silang pada CSS line hamburger
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+}
+
+/* --- ENGINE UTAMA SPA (SINGLE PAGE APPLICATION) --- */
+function changeTab(targetId, sectionName) {
+    // 1. Ganti Visibilitas Section Konten (Sistem Kelas Active)
+    const sections = document.querySelectorAll('.page-section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+        if (section.id === targetId) {
+            section.classList.add('active');
+        }
+    });
+
+    // 2. Pembaruan Status Menu Navigasi Aktif
+    const tabs = document.querySelectorAll('.nav-links li');
+    tabs.forEach(tab => {
+        tab.classList.remove('active-tab');
+        const onClickAttr = tab.querySelector('a').getAttribute('onclick');
+        if (onClickAttr && onClickAttr.includes(`'${targetId}'`)) {
+            tab.classList.add('active-tab');
+        }
+    });
+
+    // 3. Modifikasi Judul dan Sub-Pill Atas Secara Dinamis
+    document.getElementById('headerTitle').innerText = sectionName;
+    document.getElementById('headerPill').innerText = `Internal — ${sectionName}`;
+
+    // 4. Tutup Menu Navigasi Secara Otomatis di Layar Ponsel & Kembalikan Animasi Hambuger ke Semula
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.getElementById('navLinks');
+    if (hamburger.classList.contains('open')) {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+    }
+
+    // 5. Geser Halus Halaman Kembali ke Atas
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* --- SISTEM DETAIL MODAL PREVIEW IMAGE --- */
+function openModal(imageSrc) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalTargetImg');
+
+    modalImg.src = imageSrc;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden'; // Kunci scroll agar fokus pada pratinjau gambar
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = ''; // Aktifkan kembali fungsi scroll halaman
+}
+
+// Mencegah modal tertutup jika area gambar utama di dalam modal yang diklik
+document.getElementById('modalTargetImg').addEventListener('click', function (e) {
+    e.stopPropagation();
+});
+
+
+/* --- ENGINE GENERATOR GALERI AKTIVITAS DINAMIS --- */
+function tambahKegiatan(title, imageList) {
+    const container = document.getElementById('activitiesContainer');
+    if (!container) return;
+
+    // Buat Struktur Container Block Aktivitas
+    const activityBlock = document.createElement('div');
+    activityBlock.className = 'activity-block';
+
+    // Cetak Judul Kegiatan
+    const blockTitle = document.createElement('h3');
+    blockTitle.innerText = title;
+    activityBlock.appendChild(blockTitle);
+
+    // Buat Kisi Grid Galeri Foto
+    const galleryGrid = document.createElement('div');
+    galleryGrid.className = 'gallery-grid';
+
+    // Parsing Array Daftar Gambar Warga
+    imageList.forEach(srcUrl => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        galleryItem.onclick = function () { openModal(srcUrl); };
+
+        // Integrasi Tag Image Spesifikasi Lazy Loading
+        const img = document.createElement('img');
+        img.setAttribute('data-src', srcUrl); // Menyimpan alamat gambar asli pada memori cadangan data-src
+        img.alt = `Dokumentasi Acara: ${title}`;
+
+        galleryItem.appendChild(img);
+        galleryGrid.appendChild(galleryItem);
+    });
+
+    activityBlock.appendChild(galleryGrid);
+    container.appendChild(activityBlock);
+}
+
+/* --- UTALITAS LAZY LOADING ANTI-LAG (INTERSECTION OBSERVER) --- */
+function initLazyLoading() {
+    const imageTargets = document.querySelectorAll('.gallery-item img');
+
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                // Pindahkan tautan gambar dari data-src ke src utama saat mulai terdeteksi di layar
+                img.src = img.getAttribute('data-src');
+                img.onload = () => img.classList.add('loaded');
+                observer.unobserve(img); // Lepas pengawasan jika gambar sukses terunduh
+            }
+        });
+    }, {
+        root: null,
+        threshold: 0.05,
+        rootMargin: "0px 0px 150px 0px" // Gambar diunduh otomatis 150px sebelum tergulung masuk ke layar utama
+    });
+
+    imageTargets.forEach(image => imageObserver.observe(image));
+}
+
+
+/* --- PROSES PENGISIAN DATA SEEDING (SAAT HALAMAN SIAP) --- */
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Pengisian data galeri kegiatan awal
+    tambahKegiatan("Aksi Penghijauan & Penanaman 100 Bibit Pohon Bersama", [
+        "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1530587191325-3db32d826c18?q=80&w=600&auto=format&fit=crop"
+    ]);
+
+    tambahKegiatan("Semarak Perlombaan Tradisional & Pentas Seni Kemerdekaan", [
+        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1505232458627-5671a784ae7e?q=80&w=600&auto=format&fit=crop"
+    ]);
+
+    // Jalankan mesin pengawasan pemuatan gambar tertunda
+    initLazyLoading();
+});
+
+const BUDGET_API_URL = 'https://[backend-render-url]/api.php';
+const rupiah = value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+const safeText = value => String(value).replace(/[&<>'"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#039;', '"':'&quot;' }[c]));
+
+async function loadBudget() {
+    const result = await (await fetch(`${BUDGET_API_URL}?action=history`)).json();
+    if (result.status !== 'success') throw new Error(result.pesan);
+    document.getElementById('budgetBalance').textContent = rupiah(result.saldo);
+    document.getElementById('budgetHistory').innerHTML = result.data.length ? result.data.map(item => `<div class="budget-history-item"><div><strong>${safeText(item.nama)}</strong><small>${item.tanggal}</small></div><span class="${item.jenis === 'pemasukan' ? 'income-text' : 'expense-text'}">${item.jenis === 'pemasukan' ? '+' : '-'} ${rupiah(item.nominal)}</span></div>`).join('') : '<p>Belum ada transaksi.</p>';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const incomeForm = document.getElementById('incomeForm');
+    const expenseForm = document.getElementById('expenseForm');
+    const status = document.getElementById('budgetStatus');
+    document.getElementById('showIncomeButton').onclick = () => incomeForm.classList.toggle('hidden');
+    document.getElementById('showExpenseButton').onclick = () => expenseForm.classList.toggle('hidden');
+    async function save(payload) {
+        const response = await fetch(BUDGET_API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+        const result = await response.json();
+        if (!response.ok || result.status !== 'success') throw new Error(result.pesan);
+    }
+    incomeForm.addEventListener('submit', async e => { e.preventDefault(); try { await save({ action:'income', nominal:incomeAmount.value }); incomeForm.reset(); status.textContent='Pemasukan tersimpan.'; await loadBudget(); } catch (error) { status.textContent=error.message; } });
+    expenseForm.addEventListener('submit', async e => { e.preventDefault(); try { await save({ action:'expense', nama:expenseName.value, nominal:expenseAmount.value, tanggal:expenseDate.value }); expenseForm.reset(); status.textContent='Pengeluaran tersimpan.'; await loadBudget(); } catch (error) { status.textContent=error.message; } });
+    loadBudget().catch(error => { status.textContent=error.message; });
+});

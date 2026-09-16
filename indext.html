@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RT 04 Hub — Platform Komunitas Digital Modern</title>
+    <!-- Google Font Modern Premium -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Hubungkan ke File CSS Eksternal -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR PREMIUM LIGHT -->
+    <nav>
+        <div class="logo">RT 04</div>
+        <button class="hamburger" aria-label="Buka Menu" onclick="toggleMenu()">
+            <span class="line-1"></span>
+            <span class="line-2"></span>
+            <span class="line-3"></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li class="active-tab"><a onclick="changeTab('home', 'Pusat Komunitas')">Beranda</a></li>
+            <li><a onclick="changeTab('leader', 'Profil Pemimpin')">Ketua RT</a></li>
+            <li><a onclick="changeTab('team', 'Tim Manajemen')">Pengurus Inti</a></li>
+            <li><a onclick="changeTab('activities', 'Dokumentasi Kegiatan')">Aktivitas</a></li>
+            <li><a onclick="changeTab('achievements', 'Galeri Pencapaian')">Prestasi</a></li>
+            <li><a onclick="changeTab('announcements', 'Papan Pengumuman')">Pengumuman</a></li>
+            <li><a onclick="changeTab('budget', 'Anggaran RT')">Anggaran</a></li>
+        </ul>
+    </nav>
+
+    <!-- HEADER DINAMIS MINIMALIS -->
+    <header class="dynamic-header">
+        <div class="header-pill" id="headerPill">Sistem SPA Berjalan Lunak</div>
+        <h1 id="headerTitle">Pusat Komunitas</h1>
+    </header>
+
+    <!-- KONTEN UTAMA SINGLE PAGE APPLICATION -->
+    <main>
+
+        <!-- 1. SECTION BERANDA (HERO LOBBY) -->
+        <div id="home" class="page-section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span> Inovasi Administrasi Lingkungan
+                    </div>
+                    <h2>Membangun Transparansi Lingkungan dalam <span>Satu Genggaman.</span></h2>
+                    <p>Selamat datang di platform digital resmi RT 04. Sentralisasi data mandiri yang dirancang khusus
+                        untuk efisiensi birokrasi lokal, transparansi program, dan penguatan hubungan antar warga dengan
+                        standar desain modern berlatar bersih.</p>
+                    <div class="hero-btns">
+                        <button class="btn btn-primary" onclick="changeTab('announcements', 'Papan Pengumuman')">Baca
+                            Pengumuman</button>
+                        <button class="btn btn-secondary"
+                            onclick="changeTab('activities', 'Dokumentasi Kegiatan')">Eksplorasi Kegiatan</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="notch-mockup-card">
+                        <div class="mockup-header">
+                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="mock-row">
+                                <div class="mock-label">Agenda Terdekat</div>
+                                <div class="mock-val status-yellow">Kerja Bakti Masal</div>
+                            </div>
+                            <div class="mock-row">
+                                <div class="mock-label">Kas Transparan Keuangan</div>
+                                <div class="mock-val text-blue">Audit Surplus 100%</div>
+                            </div>
+                            <div class="mock-row">
+                                <div class="mock-label">Sistem Keamanan</div>
+                                <div class="mock-val status-green">Aktif & Terkendali</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. SECTION KETUA RT -->
+        <div id="leader" class="page-section">
+            <p class="section-desc">Sosok representatif penggerak utama di balik tata kelola lingkungan RT 04.</p>
+            <div class="leader-container">
+                <div class="leader-img-wrapper">
+                    <div class="leader-avatar-graphic">👨‍💼</div>
+                </div>
+                <div class="leader-info">
+                    <div class="leader-title">Ketua RT 04 Terpilih</div>
+                    <h3>Bapak Budi Santoso</h3>
+                    <div class="leader-quote">
+                        "Transformasi digital di tingkat rukun tetangga bukan sekadar gaya hidup, melainkan pondasi
+                        dasar melahirkan birokrasi yang bersih, responsif, dan inklusif bagi seluruh lapisan warga."
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Dedikasi penuh selama lebih dari 5 tahun
+                        memimpin inovasi struktural. Berkomitmen menjembatani setiap aspirasi keluarga menjadi aksi
+                        pembangunan infrastruktur sosial yang nyata dan terukur.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. SECTION PENGURUS INTI (CORE TEAM) -->
+        <div id="team" class="page-section">
+            <p class="section-desc">Aparatur pengurus inti yang menjaga stabilitas administrasi, finansial, dan keamanan
+                wilayah.</p>
+            <div class="grid-layout">
+                <div class="modern-card member-card">
+                    <div class="member-avatar">👩‍💼</div>
+                    <h4>Ibu Siti Rahma</h4>
+                    <span class="role">Sekretaris Umum</span>
+                    <p>Bertanggung jawab penuh atas pengelolaan basis data kependudukan, surat pengantar digital, serta
+                        dokumentasi notulensi rapat resmi warga.</p>
+                </div>
+                <div class="modern-card member-card">
+                    <div class="member-avatar">💵</div>
+                    <h4>Bapak Andi Wijaya</h4>
+                    <span class="role">Bendahara Utama</span>
+                    <p>Mengatur regulasi kas bulanan, menyusun laporan keuangan berkala yang transparan, dan
+                        mengalokasikan anggaran untuk utilitas bersama.</p>
+                </div>
+                <div class="modern-card member-card">
+                    <div class="member-avatar">🛡️</div>
+                    <h4>Bapak Joko Susilo</h4>
+                    <span class="role">Divisi Keamanan</span>
+                    <p>Mengkoordinasikan pos jaga, memetakan jadwal ronda malam interaktif, serta memelihara instrumen
+                        proteksi dini di lingkungan sekitar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. SECTION AKTIVITAS (DYNAMIC GALLERY) -->
+        <div id="activities" class="page-section">
+            <p class="section-desc">Kumpulan arsip digital visual dari berbagai agenda kolaboratif dan gotong royong
+                yang telah terlaksana.</p>
+            <div id="activitiesContainer">
+                <!-- Data dimasukkan secara dinamis via script.js -->
+            </div>
+        </div>
+
+        <!-- 5. SECTION PRESTASI (ACHIEVEMENTS) -->
+        <div id="achievements" class="page-section">
+            <p class="section-desc">Rekam jejak penghargaan resmi yang berhasil diraih atas sinergi hebat seluruh warga.
+            </p>
+            <div class="grid-layout">
+                <div class="modern-card achievement-card">
+                    <div class="icon-box">🏆</div>
+                    <h4>Kawasan Ramah Lingkungan 2025</h4>
+                    <p>Penghargaan tingkat kota atas kesuksesan implementasi manajemen pilah sampah mandiri dan penataan
+                        zona hijau hidroponik.</p>
+                </div>
+                <div class="modern-card achievement-card">
+                    <div class="icon-box">🥇</div>
+                    <h4>Sertifikasi Keamanan Wilayah Mandiri</h4>
+                    <p>Apresiasi dari jajaran kepolisian sektor atas catatan nol insiden kriminalitas berkat
+                        optimalisasi pos siskamling yang disiplin.</p>
+                </div>
+                <div class="modern-card achievement-card">
+                    <div class="icon-box">🤝</div>
+                    <h4>Piala Kerukunan Sosial Terpuji</h4>
+                    <p>Diberikan langsung oleh kelurahan atas persentase tingkat partisipasi dan swadaya masyarakat
+                        tertinggi dalam program sosial donor darah.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. SECTION PENGUMUMAN (ANNOUNCEMENTS) -->
+        <div id="announcements" class="page-section">
+            <p class="section-desc">Pusat maklumat, instruksi kesehatan, keselamatan, dan pemberitahuan krusial untuk
+                seluruh kepala keluarga.</p>
+            <div class="grid-layout">
+                <div class="modern-card announcement-card">
+                    <div class="announce-meta">
+                        <span>⚠️ Wajib Diperhatikan</span>
+                        <span>18 Mei 2026</span>
+                    </div>
+                    <h4>Kerja Bakti Skala Besar Antisipasi Musim Hujan</h4>
+                    <p>Diharapkan partisipasi perwakilan minimal satu orang per rumah untuk membersihkan gorong-gorong
+                        utama agar terhindar dari banjir. Berkumpul di depan Pos Utama pukul 07:00 WIB.</p>
+                </div>
+                <div class="modern-card announcement-card">
+                    <div class="announce-meta">
+                        <span>💡 Pengumuman Publik</span>
+                        <span>22 Mei 2026</span>
+                    </div>
+                    <h4>Peremajaan Total Lampu Penerangan Jalan Blok</h4>
+                    <p>Akan dilaksanakan penggantian bertahap lampu jalan rusak dengan modul Smart LED baru. Proses
+                        instalasi dipastikan tidak akan mengganggu akses jalan kendaraan warga.</p>
+                </div>
+                <div class="modern-card announcement-card">
+                    <div class="announce-meta">
+                        <span>📌 Urusan Administrasi</span>
+                        <span>01 Juni 2026</span>
+                    </div>
+                    <h4>Sinkronisasi Ulang Data Kartu Keluarga Terbaru</h4>
+                    <p>Guna validasi jatah distribusi program bantuan sosial dan pembaruan kuota logistik hari raya,
+                        dimohon mengumpulkan salinan fisik atau digital KK ke meja sekretaris.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="budget" class="page-section">
+            <p class="section-desc">Kelola saldo kas dan simpan riwayat transaksi RT secara transparan.</p>
+            <div class="budget-grid">
+                <div class="modern-card budget-card">
+                    <span class="role">Saldo saat ini</span>
+                    <h2 id="budgetBalance">Rp0</h2>
+                    <button class="btn btn-primary" id="showIncomeButton" type="button">+ Pemasukan</button>
+                    <form id="incomeForm" class="budget-form hidden">
+                        <label for="incomeAmount">Nominal pemasukan</label>
+                        <input id="incomeAmount" type="number" min="1" required>
+                        <button class="btn btn-primary" type="submit">Simpan Pemasukan</button>
+                    </form>
+                    <button class="btn btn-secondary" id="showExpenseButton" type="button">− Pengeluaran</button>
+                    <form id="expenseForm" class="budget-form hidden">
+                        <label for="expenseName">Nama pengeluaran</label>
+                        <input id="expenseName" type="text" maxlength="150" required>
+                        <label for="expenseAmount">Nominal</label>
+                        <input id="expenseAmount" type="number" min="1" required>
+                        <label for="expenseDate">Tanggal pengeluaran</label>
+                        <input id="expenseDate" type="date" required>
+                        <button class="btn btn-primary" type="submit">Simpan Pengeluaran</button>
+                    </form>
+                    <p id="budgetStatus" role="status"></p>
+                </div>
+                <div class="modern-card budget-card"><span class="role">History transaksi</span><div id="budgetHistory">Memuat riwayat...</div></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FULLSCREEN IMAGE MODAL PREVIEW -->
+    <div class="modal" id="imageModal" onclick="closeModal()">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <img class="modal-content" id="modalTargetImg" alt="Pratinjau Gambar Lengkap">
+    </div>
+
+    <!-- FOOTER LIGHT PREMIUM -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">RT 04<span>／HUB</span></div>
+            <p class="footer-copy">&copy; 2026 Komunitas RT 04. Hak Cipta Dilindungi Undang-Undang. Dibangun dengan
+                konsep Keanggunan Minimalis Modern Light Mode.</p>
+        </div>
+    </footer>
+
+    <!-- Hubungkan ke File JavaScript Eksternal -->
+    <script src="script.js"></script>
+</body>
+
+</html>
