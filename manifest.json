@@ -1,18 +1,19 @@
 {
   "name": "RT 4 Bersatu Maju",
   "short_name": "RT 4",
-  "start_url": "./index.html",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ff5e42",
   "icons": [
     {
-      "src": "gambar/favIcon.ico",
+      "src": "gambar/LogoRT.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "gambar/favIcon.ico",
+      "src": "gambar/LogoRT.png",
       "sizes": "512x512",
       "type": "image/png"
     }

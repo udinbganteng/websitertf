@@ -168,6 +168,10 @@ const SUPABASE_HEADERS = {
     Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
     'Content-Type': 'application/json'
 };
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+}
 const rupiah = value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
 const safeText = value => String(value).replace(/[&<>'"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#039;', '"':'&quot;' }[c]));
 const angka = value => Number(String(value).replace(/[^0-9]/g, '')) || 0;
