@@ -207,31 +207,10 @@
         </div>
 
         <div id="budget" class="page-section">
-            <p class="section-desc">Kelola saldo kas dan simpan riwayat transaksi RT secara transparan.</p>
-            <div class="budget-grid">
-                <div class="modern-card budget-card">
-                    <span class="role">Saldo saat ini</span>
-                    <h2 id="budgetBalance">Rp0</h2>
-                    <button class="btn btn-primary" id="showIncomeButton" type="button">+ Pemasukan</button>
-                    <form id="incomeForm" class="budget-form hidden">
-                        <label for="incomeAmount">Nominal pemasukan</label>
-                        <input id="incomeAmount" type="number" min="1" required>
-                        <button class="btn btn-primary" type="submit">Simpan Pemasukan</button>
-                    </form>
-                    <button class="btn btn-secondary" id="showExpenseButton" type="button">− Pengeluaran</button>
-                    <form id="expenseForm" class="budget-form hidden">
-                        <label for="expenseName">Nama pengeluaran</label>
-                        <input id="expenseName" type="text" maxlength="150" required>
-                        <label for="expenseAmount">Nominal</label>
-                        <input id="expenseAmount" type="number" min="1" required>
-                        <label for="expenseDate">Tanggal pengeluaran</label>
-                        <input id="expenseDate" type="date" required>
-                        <button class="btn btn-primary" type="submit">Simpan Pengeluaran</button>
-                    </form>
-                    <p id="budgetStatus" role="status"></p>
-                </div>
-                <div class="modern-card budget-card"><span class="role">History transaksi</span><div id="budgetHistory">Memuat riwayat...</div></div>
-            </div>
+            <p class="section-desc">Setiap tahun memiliki card, saldo, dan history anggarannya sendiri.</p>
+            <button class="btn btn-primary" id="addBudgetButton" type="button">+ Tambahkan Anggaran Baru</button>
+            <form id="newBudgetForm" class="budget-form hidden budget-new-form"><label for="newBudgetName">Nama anggaran</label><input id="newBudgetName" type="text" maxlength="100" placeholder="Contoh: Anggaran RT 2026" required><label for="newBudgetYear">Tahun</label><input id="newBudgetYear" type="number" min="2000" max="2100" required><button class="btn btn-primary" type="submit">Simpan Anggaran</button></form>
+            <div id="budgetCards" class="budget-grid"></div>
         </div>
 
     </main>
