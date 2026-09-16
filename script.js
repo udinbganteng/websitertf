@@ -149,15 +149,24 @@ document.addEventListener("DOMContentLoaded", function () {
     initLazyLoading();
 });
 
-const BUDGET_API_URL = 'https://[backend-render-url]/api.php';
+const SUPABASE_URL = 'https://apahbriqkqhmvknbpbdc.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwYWhicmlxa3FobXZrbmJwYmRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1NTc4NzcsImV4cCI6MjEwNTEzMzg3N30.2usxTSQAWIwGpvUt5WlZEP5vHSvgZkXNlPtR5IuDDTs';
+const SUPABASE_HEADERS = {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json'
+};
 const rupiah = value => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
 const safeText = value => String(value).replace(/[&<>'"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#039;', '"':'&quot;' }[c]));
 
 async function loadBudget() {
-    const result = await (await fetch(`${BUDGET_API_URL}?action=history`)).json();
-    if (result.status !== 'success') throw new Error(result.pesan);
-    document.getElementById('budgetBalance').textContent = rupiah(result.saldo);
-    document.getElementById('budgetHistory').innerHTML = result.data.length ? result.data.map(item => `<div class="budget-history-item"><div><strong>${safeText(item.nama)}</strong><small>${item.tanggal}</small></div><span class="${item.jenis === 'pemasukan' ? 'income-text' : 'expense-text'}">${item.jenis === 'pemasukan' ? '+' : '-'} ${rupiah(item.nominal)}</span></div>`).join('') : '<p>Belum ada transaksi.</p>';
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/budget_transactions?select=id,jenis,nama,nominal,tanggal&order=tanggal.desc,id.desc`, { headers: SUPABASE_HEADERS });
+    if (!response.ok) throw new Error('Riwayat anggaran gagal dimuat.');
+    const rows = await response.json();
+    let saldo = 0;
+    rows.forEach(row => { saldo += row.jenis === 'pemasukan' ? Number(row.nominal) : -Number(row.nominal); });
+    document.getElementById('budgetBalance').textContent = rupiah(saldo);
+    document.getElementById('budgetHistory').innerHTML = rows.length ? rows.map(item => `<div class="budget-history-item"><div><strong>${safeText(item.nama)}</strong><small>${item.tanggal}</small></div><span class="${item.jenis === 'pemasukan' ? 'income-text' : 'expense-text'}">${item.jenis === 'pemasukan' ? '+' : '-'} ${rupiah(item.nominal)}</span></div>`).join('') : '<p>Belum ada transaksi.</p>';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -167,9 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('showIncomeButton').onclick = () => incomeForm.classList.toggle('hidden');
     document.getElementById('showExpenseButton').onclick = () => expenseForm.classList.toggle('hidden');
     async function save(payload) {
-        const response = await fetch(BUDGET_API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-        const result = await response.json();
-        if (!response.ok || result.status !== 'success') throw new Error(result.pesan);
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/budget_transactions`, { method:'POST', headers:{...SUPABASE_HEADERS, Prefer:'return=minimal'}, body:JSON.stringify({ jenis: payload.action === 'income' ? 'pemasukan' : 'pengeluaran', nama: payload.action === 'income' ? 'Pemasukan manual' : payload.nama, nominal: Number(payload.nominal), tanggal: payload.tanggal || new Date().toISOString().slice(0, 10) }) });
+        if (!response.ok) throw new Error('Transaksi gagal disimpan.');
     }
     incomeForm.addEventListener('submit', async e => { e.preventDefault(); try { await save({ action:'income', nominal:incomeAmount.value }); incomeForm.reset(); status.textContent='Pemasukan tersimpan.'; await loadBudget(); } catch (error) { status.textContent=error.message; } });
     expenseForm.addEventListener('submit', async e => { e.preventDefault(); try { await save({ action:'expense', nama:expenseName.value, nominal:expenseAmount.value, tanggal:expenseDate.value }); expenseForm.reset(); status.textContent='Pengeluaran tersimpan.'; await loadBudget(); } catch (error) { status.textContent=error.message; } });
